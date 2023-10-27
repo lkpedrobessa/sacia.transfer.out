@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZMOV_MOV_HU_SRV" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <Annotation Term="Core.SchemaVersion" String="1.0.0" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+            <EntityType Name="HU" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="ExternalHandlingUnitNumber"/>
+                </Key>
+                <Property Name="ExternalHandlingUnitNumber" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Handling Unit" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="IsHighLevel" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="ISHIGHLEVEL" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="IsUnique" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="ISUNIQUE" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Plant" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Not More Closely Defined Area, Possibly Used for Patchlevels" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MaterialNumber" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Char" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="BatchNumber" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Character Field Length = 10" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="StorageLocation" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Not More Closely Defined Area, Possibly Used for Patchlevels" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Quantity" Type="Edm.Decimal" Nullable="false" Precision="15" Scale="3" sap:unicode="false" sap:label="QUANTITY" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="QuantityUnit" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="3-Byte field" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="HUItem" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="ExternalHandlingUnitNumber"/>
+                    <PropertyRef Name="HandlingUnitLine"/>
+                </Key>
+                <Property Name="ExternalHandlingUnitNumber" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Char20" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="HandlingUnitLine" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Character Field Length = 10" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MaterialNumber" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Material" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Quantity" Type="Edm.Decimal" Nullable="false" Precision="15" Scale="3" sap:unicode="false" sap:label="Packed Quantity" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="QuantityUnit" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="UoM of HU item" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="BatchNumber" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Batch" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Plant" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Plant" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="StorageLocation" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Stor. location" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TopPack" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Char20" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <ComplexType Name="Return">
+                <Property Name="Type" Type="Edm.String" Nullable="false" MaxLength="1" sap:label="0" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="@HO\QABAP Type Edito"/>
+                <Property Name="Id" Type="Edm.String" Nullable="false" MaxLength="20" sap:label="0" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="@HO\QABAP Type Edito"/>
+                <Property Name="Number" Type="Edm.String" Nullable="false" MaxLength="3" sap:label="0" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="@HO\QABAP Type Edito"/>
+                <Property Name="Message" Type="Edm.String" Nullable="false" MaxLength="220" sap:label="0" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="@HO\QABAP Type Edito"/>
+            </ComplexType>
+            <EntityContainer Name="ZMOV_MOV_HU_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="HUSet" EntityType="ZMOV_MOV_HU_SRV.HU" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="HUItemSet" EntityType="ZMOV_MOV_HU_SRV.HUItem" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <FunctionImport Name="move_hu" ReturnType="Collection(ZMOV_MOV_HU_SRV.Return)" m:HttpMethod="POST" sap:action-for="ZMOV_MOV_HU_SRV.HUItem">
+                    <Parameter Name="I_HUID_LIST" Type="Edm.String" Mode="In" MaxLength="500"/>
+                    <Parameter Name="IV_TRUCK" Type="Edm.String" Mode="In" MaxLength="8"/>
+                    <Parameter Name="IV_TARGET_STORAGELOC" Type="Edm.String" Mode="In" MaxLength="4"/>
+                </FunctionImport>
+            </EntityContainer>
+            <atom:link rel="self" href="http://10.0.2.81:8002/sap/opu/odata/sap/ZMOV_MOV_HU_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="http://10.0.2.81:8002/sap/opu/odata/sap/ZMOV_MOV_HU_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

@@ -1,0 +1,53 @@
+<mvc:View controllerName="sacia.transfer.out.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    xmlns:m="sap.m"
+    xmlns:t="sap.ui.table"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:smartField="sap.ui.comp.smartfield"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+    xmlns:f="sap.f" displayBlock="true" height="100%" busyIndicatorDelay="0"
+    xmlns:c="sap.ui.core"
+    xmlns:tnt="sap.tnt"
+    xmlns:u="sap.ui.unified"
+    xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    <Page title="{i18n>title}" busy="{viewModel>/busy}" busyIndicatorDelay="{viewModel>/delay}"
+        showHeader="false">
+        <content>
+            <sap.ui.layout.form:SimpleForm xmlns:sap.ui.layout.form="sap.ui.layout.form"
+                xmlns:sap.ui.core="sap.ui.core" editable="true" layout="ResponsiveGridLayout"
+                id="__form0">
+                <sap.ui.layout.form:content>
+                    <Label text="{i18n>packId}" id="__label0" />
+                    <Input width="100%" id="__input0" submit="onAddPackId"
+                        maxLength="20" />
+                </sap.ui.layout.form:content>
+            </sap.ui.layout.form:SimpleForm>
+            <List headerText=""
+                id="embalagensList" growingDirection="Upwards"
+                items="{path:'embalagensListModel>/modelData'}" mode="Delete"
+                delete="onDeleteEmbalagem" >
+                <ObjectListItem
+                    title="{embalagensListModel>ExternalHandlingUnitNumber}"
+                    number="{embalagensListModel>Quantity} {embalagensListModel>Unit}">
+                    <ObjectAttribute text="{i18n>armOrigem}: {embalagensListModel>ArmOrigem}" />
+                    <ObjectAttribute text="{i18n>material}: {embalagensListModel>Material}" />
+                </ObjectListItem>
+            </List>
+        </content>
+        <footer>
+            <Bar>
+                <contentLeft>
+                    <Button id="idMsgPopover" icon="sap-icon://message-popup"
+                        press="onMessagesButtonPress" type="Ghost" visible="{viewModel>/messagesButtonVisible}"/>
+                </contentLeft>
+                <contentRight>
+                    <Button text="{i18n>save}" width="150px" press="onOpenTruckArmDestDialog"
+                        id="__button0" enabled="{viewModel>/dialogEnabled}"
+                        icon="sap-icon://save" type="Emphasized"/>
+                </contentRight>
+            </Bar>
+        </footer>
+    </Page>
+</mvc:View>

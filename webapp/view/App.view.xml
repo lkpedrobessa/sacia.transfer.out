@@ -1,0 +1,12 @@
+<mvc:View
+    controllerName="sacia.transfer.out.controller.App"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+>
+    <Shell id="shell" appWidthLimited="false">
+        <App id="idAppControl">
+
+        </App>
+    </Shell>
+</mvc:View>
