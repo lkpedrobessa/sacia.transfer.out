@@ -25,6 +25,7 @@ sap.ui.define([
                 this.initViewModel();
                 this.initDataModel();
                 this.initEmbalagensListModel();
+                this.getRouter().getRoute("RouteMainView").attachPatternMatched(this.onNavigation, this);
                 //this.initErrorModel();
                 //this.initMessagePopOver();
             },
@@ -39,6 +40,12 @@ sap.ui.define([
 
                 this.oViewModel.setData(oViewModel);
                 this.setModel(this.oViewModel, "viewModel");
+            },
+
+            onNavigation: function(){
+                this.initViewModel();
+                this.initDataModel();
+                this.initEmbalagensListModel();
             },
 
             initDataModel: function () {
@@ -59,9 +66,8 @@ sap.ui.define([
             },
 
             initEmbalagensListModel: function () {
-                var oEmbalagensListModel = new JSONModel();
-
-                this.oEmbalagensListModel.setData(oEmbalagensListModel);
+                this.aEmbalagens = [],
+                this.oEmbalagensListModel.setData({});
                 this.setModel(this.oEmbalagensListModel, "embalagensListModel");
             },
 
@@ -174,7 +180,7 @@ sap.ui.define([
                     if (oEvent.mParameters.listItem.mProperties.title == this.aEmbalagens[i].ExternalHandlingUnitNumber) {
                         MessageToast.show(this.getResourceBundle().getText("embalagemDeleted"));
 
-                        this.aEmbalagens.splice(i, i + 1);
+                        this.aEmbalagens.splice(i, 1);
 
                         break;
                     }
@@ -276,6 +282,7 @@ sap.ui.define([
                         }, 10);
 
                         that.oEmbalagensListModel.setData(null);
+                        that.aEmbalagens = [];
                         that.oViewModel.setProperty("/dialogEnabled", false);
                     },
                     error: function (oError) {

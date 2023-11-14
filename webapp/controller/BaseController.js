@@ -1,10 +1,11 @@
 sap.ui.define(
     // eslint-disable-next-line linebreak-style
     [
-        "sap/ui/core/mvc/Controller"
+        "sap/ui/core/mvc/Controller",
+        "sap/ui/core/UIComponent"
     ],
 
-    function (Controller) {
+    function (Controller, UIComponent) {
         "use strict";
 
         return Controller.extend("sacia.transfer.out.controller.BaseController", {
@@ -41,6 +42,10 @@ sap.ui.define(
             getResourceBundle: function () {
                 return this.getOwnerComponent().getModel("i18n").getResourceBundle();
             },
+
+			getRouter: function () {
+				return UIComponent.getRouterFor(this);
+			},
         });
     }
 
