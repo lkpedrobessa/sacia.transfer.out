@@ -7,12 +7,13 @@ sap.ui.define([
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/m/MessagePopover",
-    "sap/m/MessageItem"
+    "sap/m/MessageItem",
+    "sacia/transfer/out/model/HU"
 ],
     /**
          * @param {typeof sap.ui.core.mvc.Controller} Controller
          */
-    function (BaseController, JSONModel, MessageBox, MessageToast, Fragment, Filter, FilterOperator, MessagePopover, MessageItem) {
+    function (BaseController, JSONModel, MessageBox, MessageToast, Fragment, Filter, FilterOperator, MessagePopover, MessageItem, model) {
         "use strict";
 
         return BaseController.extend("sacia.transfer.out.controller.Main", {
@@ -101,11 +102,13 @@ sap.ui.define([
             onAddPackId: function (oEvent) {
                 var that = this;
                 var found = false;
-                var hu = oEvent.mParameters.value
+                var huFound = oEvent.mParameters.value.toString();
+                var newModel = new model(huFound);
+                huFound = newModel.convertToIntNum(20);
 
                 if (oEvent.mParameters.value !== "") {
                     for (var i = 0; i < this.aEmbalagens.length; i++) {
-                        if (oEvent.mParameters.value == this.aEmbalagens[i].ExternalHandlingUnitNumber) {
+                        if (parseInt(huFound, 10).toString() == this.aEmbalagens[i].ExternalHandlingUnitNumber) {
                             found = true;
                         }
                     }
@@ -115,7 +118,7 @@ sap.ui.define([
                     var url = "/HUSet";
                     var aFilters = [];
 
-                    aFilters.push(new Filter("Externalhandlingunitnumber", FilterOperator.EQ, oEvent.mParameters.value.toString().padStart(20, '0')));
+                    aFilters.push(new Filter("Externalhandlingunitnumber", FilterOperator.EQ, huFound));
 
                     sap.ui.core.BusyIndicator.show();
 
@@ -123,10 +126,10 @@ sap.ui.define([
                         filters: aFilters,
                         success: function (oData) {
                             sap.ui.core.BusyIndicator.hide();
-
+                            var hu = oData.results[0].Externalhandlingunitnumber
                             if (oData.results.length > 0) {
                                 var reg = {
-                                    ExternalHandlingUnitNumber: hu,
+                                    ExternalHandlingUnitNumber: parseInt(hu, 10).toString(),
                                     Batch: oData.results[0].Batchnumber,
                                     Material: oData.results[0].Materialnumber,
                                     Quantity: oData.results[0].Quantity,
@@ -148,10 +151,13 @@ sap.ui.define([
                                     that.oViewModel.setProperty("/dialogEnabled", false);
                                 }
                             } else {
-                                MessageBox.error(this.getResourceBundle().getText("packNotExists"));
+                                MessageBox.error(that.getResourceBundle().getText("packNotExists"));
                             }
                         },
                         error: function () {
+                            sap.ui.core.BusyIndicator.hide();
+                            
+                            MessageBox.error(that.getResourceBundle().getText("noHU"));
                         }
                     });
                 } else {
@@ -275,6 +281,7 @@ sap.ui.define([
                             that._oMessagePopover.openBy(oButton);
                         }, 10);
 
+                        that.aEmbalagens = [];
                         that.oEmbalagensListModel.setData(null);
                         that.oViewModel.setProperty("/dialogEnabled", false);
                     },

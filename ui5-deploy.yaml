@@ -23,4 +23,4 @@ builder:
           name: ZMOB_TRANSF_OUT
           description: app transfer out
           package: ZMOB
-          transport: DEVK936830
+          transport: DEVK936949
