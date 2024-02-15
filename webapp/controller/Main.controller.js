@@ -43,7 +43,7 @@ sap.ui.define([
                 this.setModel(this.oViewModel, "viewModel");
             },
 
-            onNavigation: function(){
+            onNavigation: function () {
                 this.initViewModel();
                 this.initDataModel();
                 this.initEmbalagensListModel();
@@ -103,6 +103,12 @@ sap.ui.define([
                 this.oViewModel.setProperty("/dialogEnabled", false);
                 this.oDataModel.setProperty("/truckValue", "");
                 this.oViewModel.setProperty("/messagesButtonVisible", false);
+
+                var oInput = this.getView().byId("__input0").addEventDelegate({
+                    onAfterRendering: function () {
+                        oInput.focus();
+                    }
+                });
             },
 
             onAddPackId: function (oEvent) {
@@ -162,7 +168,7 @@ sap.ui.define([
                         },
                         error: function () {
                             sap.ui.core.BusyIndicator.hide();
-                            
+
                             MessageBox.error(that.getResourceBundle().getText("noHU"));
                         }
                     });
