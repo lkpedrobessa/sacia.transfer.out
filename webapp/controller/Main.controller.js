@@ -68,7 +68,7 @@ sap.ui.define([
 
             initEmbalagensListModel: function () {
                 this.aEmbalagens = [],
-                this.oEmbalagensListModel.setData({});
+                    this.oEmbalagensListModel.setData({});
                 this.setModel(this.oEmbalagensListModel, "embalagensListModel");
             },
 
@@ -140,27 +140,31 @@ sap.ui.define([
                             sap.ui.core.BusyIndicator.hide();
                             var hu = oData.results[0].Externalhandlingunitnumber
                             if (oData.results.length > 0) {
-                                var reg = {
-                                    ExternalHandlingUnitNumber: parseInt(hu, 10).toString(),
-                                    Batch: oData.results[0].Batchnumber,
-                                    Material: oData.results[0].Materialnumber,
-                                    Quantity: oData.results[0].Quantity,
-                                    Unit: oData.results[0].Quantityunit,
-                                    Plant: oData.results[0].Plant,
-                                    ArmOrigem: oData.results[0].Warehousenumber,
-                                };
+                                if (oData.results[0].Storagelocation == "PA" || oData.results[0].Storagelocation == "QM") {
+                                    var reg = {
+                                        ExternalHandlingUnitNumber: parseInt(hu, 10).toString(),
+                                        Batch: oData.results[0].Batchnumber,
+                                        Material: oData.results[0].Materialnumber,
+                                        Quantity: oData.results[0].Quantity,
+                                        Unit: oData.results[0].Quantityunit,
+                                        Plant: oData.results[0].Plant,
+                                        ArmOrigem: oData.results[0].Warehousenumber,
+                                    };
 
-                                that.aEmbalagens.push(reg);
-                                MessageToast.show(that.getResourceBundle().getText("packAdded"));
+                                    that.aEmbalagens.unshift(reg);
+                                    MessageToast.show(that.getResourceBundle().getText("packAdded"));
 
-                                that.oEmbalagensListModel.setData({ modelData: that.aEmbalagens });
-                                that.oViewModel.setProperty("/embalagensCount", that.aEmbalagens.length.toString());
-                                that.getView().byId("__input0").setValue("");
+                                    that.oEmbalagensListModel.setData({ modelData: that.aEmbalagens });
+                                    that.oViewModel.setProperty("/embalagensCount", that.aEmbalagens.length.toString());
+                                    that.getView().byId("__input0").setValue("");
 
-                                if (that.aEmbalagens.length > 0) {
-                                    that.oViewModel.setProperty("/dialogEnabled", true);
+                                    if (that.aEmbalagens.length > 0) {
+                                        that.oViewModel.setProperty("/dialogEnabled", true);
+                                    } else {
+                                        that.oViewModel.setProperty("/dialogEnabled", false);
+                                    }
                                 } else {
-                                    that.oViewModel.setProperty("/dialogEnabled", false);
+                                    MessageBox.error(that.getResourceBundle().getText("notPAorQM"));
                                 }
                             } else {
                                 MessageBox.error(that.getResourceBundle().getText("packNotExists"));
